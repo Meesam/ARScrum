@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35514.174 d17.12
+VisualStudioVersion = 17.12.35514.174
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARScrumWEBAPI", "ARScrumWEBAPI\ARScrumWEBAPI.csproj", "{63B6CB1F-9A8B-489A-917C-D2D987AF0B33}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARScrum.Model", "ARScrum.Model\ARScrum.Model.csproj", "{B0406A71-E1E6-4DF8-899E-81730BB652C5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARScrum.Services", "ARScrum.Services\ARScrum.Services.csproj", "{5C9AACE1-E88D-49BF-B886-26B8E64CC1EA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{63B6CB1F-9A8B-489A-917C-D2D987AF0B33}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{63B6CB1F-9A8B-489A-917C-D2D987AF0B33}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{63B6CB1F-9A8B-489A-917C-D2D987AF0B33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0406A71-E1E6-4DF8-899E-81730BB652C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0406A71-E1E6-4DF8-899E-81730BB652C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0406A71-E1E6-4DF8-899E-81730BB652C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0406A71-E1E6-4DF8-899E-81730BB652C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C9AACE1-E88D-49BF-B886-26B8E64CC1EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C9AACE1-E88D-49BF-B886-26B8E64CC1EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C9AACE1-E88D-49BF-B886-26B8E64CC1EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C9AACE1-E88D-49BF-B886-26B8E64CC1EA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
