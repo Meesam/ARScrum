@@ -63,6 +63,8 @@ namespace ARScrumWEBAPI.Controllers
             if (loginModel != null)
             {
                 var user = await _userManager.FindByNameAsync(loginModel.UserName);
+                if (user is null)
+                    return StatusCode(StatusCodes.Status500InternalServerError, new ARScrum.Model.AppModel.Response.Response { Status = "Error", Message = "Username or Password is incorrect" });
                 var password = await _userManager.CheckPasswordAsync(user, loginModel.Password);
                 if (user != null && password)
                 {
