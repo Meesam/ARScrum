@@ -1,5 +1,8 @@
 using ARScrum.Model.AppModel;
 using ARScrum.Services;
+using ARScrum.Services.Services.AppProject;
+using ARScrum.Services.Services.AppSprints;
+using ARScrum.Services.Services.AppTasks;
 using ARScrum.Services.Services.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -13,6 +16,9 @@ var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 // Add services to the container.
 
 builder.Services.AddScoped<IUserManagement, UserManagement>();
+builder.Services.AddScoped<IAppTaskService, AppTaskService>();
+builder.Services.AddScoped<IProjectService, ProjectService>();
+builder.Services.AddScoped<ISprintService, SprintService>();
 
 builder.Services.AddControllers();
 
