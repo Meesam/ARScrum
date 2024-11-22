@@ -36,6 +36,10 @@ namespace ARScrumWEBAPI.Controllers
         {
             if (registerUser != null)
             {
+                if (registerUser.Role is null)
+                {
+                    registerUser.Role = "User";
+                }
                 var token = await _userManagement.CreateUserWithTokenAsync(registerUser);
                 if (token.IsSuccess)
                 {

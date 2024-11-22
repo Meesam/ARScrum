@@ -13,6 +13,11 @@ namespace ARScrum.Services
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
+        public DbSet<Project> Projects { get; set; }
+
+        public DbSet<Sprint> Sprints { get; set; }
+
+        public DbSet<AppTask> Tasks { get; set; }
 
     }
 }

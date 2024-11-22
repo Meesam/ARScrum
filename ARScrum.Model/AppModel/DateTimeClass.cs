@@ -11,6 +11,9 @@ namespace ARScrum.Model.AppModel
     {
         [Required]
         public DateTime CreatedDate { get; set; } = DateTime.Now;
+        [Required]
+        public string CreatedBy { get; set; } = string.Empty;
+        public string? UpdatedBy { get; set; }
         public DateTime? UpdatedDate { get; set; }
     }
 }
