@@ -46,7 +46,7 @@ namespace ARScrumWEBAPI.Controllers
                 else
                 {
                     return StatusCode(StatusCodes.Status500InternalServerError,
-                            new ARScrum.Model.AppModel.Response.Response { Status = "Error", Message = token.Message.ToString() });
+                            new ARScrum.Model.AppModel.Response.Response { Status = "Error", Message = token?.Message?.ToString() });
                 }
             }
             else
