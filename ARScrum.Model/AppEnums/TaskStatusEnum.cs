@@ -8,6 +8,6 @@ namespace ARScrum.Model.AppEnums
 {
     public enum TaskStatusEnum
     {
-        New, InProgress, Hold, Reject, Completed
+        New = 0, InProgress = 1, Hold = 2, Reject = 3, Completed = 4
     }
 }

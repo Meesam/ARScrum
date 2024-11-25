@@ -1,11 +1,112 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using ARScrum.Model.AppModel.Response;
+using ARScrum.Model.AppModel;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ARScrum.Services.Services.AppSprints;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ARScrumWEBAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Admin")]
     public class SprintController : ControllerBase
     {
+        private readonly ISprintService _sprintService;
+
+        public SprintController(ISprintService sprintService)
+        {
+            _sprintService = sprintService;
+        }
+
+        [HttpPost]
+        [Route("createSprint")]
+        public async Task<IActionResult> CreateSprint([FromBody] Sprint sprint)
+        {
+            if (sprint is null)
+            {
+                return StatusCode(StatusCodes.Status403Forbidden, new AppResponse { Status = "Error", Message = "Sprint fields cannot be empty" });
+            }
+            var result = await _sprintService.CreateSprintAsync(sprint);
+            if (result.IsSuccess && result.StatusCode == 200)
+            {
+                return Ok(result);
+            }
+
+            return StatusCode(StatusCodes.Status500InternalServerError, new AppResponse { Status = "Error", Message = result.Message });
+
+        }
+
+        [HttpPost]
+        [Route("updateSprint")]
+        public async Task<IActionResult> UpdateSprint([FromBody] Sprint sprint)
+        {
+            if (sprint is null)
+            {
+                return StatusCode(StatusCodes.Status403Forbidden, new AppResponse { Status = "Error", Message = "Sprint fields cannot be empty" });
+            }
+            var result = await _sprintService.UpdateSprintAsync(sprint);
+            if (result.IsSuccess && result.StatusCode == 200)
+            {
+                return Ok(result);
+            }
+
+            return StatusCode(StatusCodes.Status500InternalServerError, new AppResponse { Status = "Error", Message = result.Message });
+
+        }
+
+        [HttpGet]
+        [Route("getSprintById")]
+        public async Task<IActionResult> GetSprintById([FromQuery] int sprintId)
+        {
+            if (sprintId <= 0)
+            {
+                return StatusCode(StatusCodes.Status403Forbidden, new AppResponse { Status = "Error", Message = "SprintId cannot be zero or less then zero" });
+            }
+
+            var result = await _sprintService.GetSprintByIdAsync(sprintId);
+            if (result.IsSuccess && result.StatusCode == 200)
+            {
+                return Ok(result);
+            }
+            return StatusCode(StatusCodes.Status500InternalServerError, new AppResponse { Status = "Error", Message = result.Message });
+        }
+
+        [HttpGet]
+        [Route("getAllSprint")]
+        public async Task<IActionResult> GetAllSprint([FromQuery] string createdBy)
+        {
+            if (createdBy is null || createdBy == "")
+            {
+                return StatusCode(StatusCodes.Status403Forbidden, new AppResponse { Status = "Error", Message = "CreatedBy cannot be empty or null" });
+            }
+            var result = await _sprintService.GetAllActiveSprintAsync(createdBy);
+            if (result.IsSuccess && result.StatusCode == 200)
+            {
+                return Ok(result);
+            }
+            return StatusCode(StatusCodes.Status500InternalServerError, new AppResponse { Status = "Error", Message = result.Message });
+        }
+
+        [HttpDelete]
+        [Route("deleteSprint")]
+        public async Task<IActionResult> DeleteSprint([FromQuery] int sprintId, [FromQuery] string deletedBy)
+        {
+            if (sprintId <= 0)
+            {
+                return StatusCode(StatusCodes.Status403Forbidden, new AppResponse { Status = "Error", Message = "SprintId cannot be zero or less then zero" });
+            }
+            if (deletedBy is null || deletedBy == "")
+            {
+                return StatusCode(StatusCodes.Status403Forbidden, new AppResponse { Status = "Error", Message = "DeletedBy cannot be empty or null" });
+            }
+
+            var result = await _sprintService.DeleteSprintAsync(sprintId, deletedBy);
+            if (result.IsSuccess && result.StatusCode == 200)
+            {
+                return Ok(result);
+            }
+            return StatusCode(StatusCodes.Status500InternalServerError, new AppResponse { Status = "Error", Message = result.Message });
+        }
     }
 }

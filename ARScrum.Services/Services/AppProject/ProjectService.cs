@@ -61,7 +61,7 @@ namespace ARScrum.Services.Services.AppProject
         {
             try
             {
-                var result = await _applicationDbContext.Projects.Where(x => x.CreatedBy == createdBy).Where(static x => !x.IsDeleted).OrderBy(x => x.CreatedDate).ToListAsync();
+                var result = await _applicationDbContext.Projects.Where(x => x.CreatedBy == createdBy).Where(static x => !x.IsDeleted).OrderByDescending(x => x.CreatedDate).ToListAsync();
                 return new ApiResponse<List<Project>> { IsSuccess = true, StatusCode = 200, Message = "Projects found successfully", Response = result };
             }
             catch
@@ -108,7 +108,7 @@ namespace ARScrum.Services.Services.AppProject
             }
             catch (Exception ex)
             {
-                return new ApiResponse<string> { IsSuccess = false, StatusCode = 500, Message = "AAn error occurred while updating project" };
+                return new ApiResponse<string> { IsSuccess = false, StatusCode = 500, Message = "An error occurred while updating project" };
             }
 
         }

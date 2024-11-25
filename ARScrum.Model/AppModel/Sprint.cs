@@ -17,6 +17,7 @@ namespace ARScrum.Model.AppModel
         public string? SprintDescription { get; set; }
         public DateTime? SprintStartDate { get; set; }
         public DateTime? SprintEndDate { get; set; }
+        [Required]
         public int ProjectId { get; set; }
         public Project? Project { get; set; }
         public List<AppTask> SprintTasks { get; set; } = new List<AppTask>();

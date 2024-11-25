@@ -8,6 +8,6 @@ namespace ARScrum.Model.AppEnums
 {
     public enum TaskTypeEnum
     {
-        Epic, Story, Issue, SubIssue,
+        Epic = 0, Story = 1, Issue = 2, SubIssue = 3,
     }
 }

@@ -8,6 +8,6 @@ namespace ARScrum.Model.AppEnums
 {
     public enum PriorityEnum
     {
-        High, Medium, Low, Critical
+        High = 0, Medium = 1, Low = 2, Critical = 3
     }
 }

@@ -1,6 +1,7 @@
 ﻿using ARScrum.Model.AppModel;
 using ARScrum.Model.AppModel.Response;
 using ARScrum.Services.Services.AppProject;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,6 +9,7 @@ namespace ARScrumWEBAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles ="Admin")]
     public class ProjectController : ControllerBase
     {
         private readonly IProjectService _projectService;
