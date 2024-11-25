@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ARScrum.Model.AppModel.Response
 {
-    public class Response
+    public class AppResponse
     {
         public string? Status { get; set; }
         public string? Message { get; set; }

@@ -1,6 +1,7 @@
 ﻿using ARScrum.Model.AppModel;
 using ARScrum.Model.AppModel.Authentication.Login;
 using ARScrum.Model.AppModel.Authentication.SignUp;
+using ARScrum.Model.AppModel.Response;
 using ARScrum.Services.Services.Authentication;
 using Azure;
 using Microsoft.AspNetCore.Http;
@@ -45,17 +46,17 @@ namespace ARScrumWEBAPI.Controllers
                 {
 
                     return StatusCode(StatusCodes.Status200OK,
-                            new ARScrum.Model.AppModel.Response.Response { Status = "Success", Message = $"User created successfully" });
+                            new AppResponse { Status = "Success", Message = $"User created successfully" });
                 }
                 else
                 {
                     return StatusCode(StatusCodes.Status500InternalServerError,
-                            new ARScrum.Model.AppModel.Response.Response { Status = "Error", Message = token?.Message?.ToString() });
+                            new AppResponse { Status = "Error", Message = token?.Message?.ToString() });
                 }
             }
             else
             {
-                return StatusCode(StatusCodes.Status403Forbidden, new ARScrum.Model.AppModel.Response.Response { Status = "Error", Message = "User cannot be null" });
+                return StatusCode(StatusCodes.Status403Forbidden, new AppResponse { Status = "Error", Message = "User cannot be null" });
             }
 
         }
@@ -68,7 +69,7 @@ namespace ARScrumWEBAPI.Controllers
             {
                 var user = await _userManager.FindByNameAsync(loginModel.UserName);
                 if (user is null)
-                    return StatusCode(StatusCodes.Status500InternalServerError, new ARScrum.Model.AppModel.Response.Response { Status = "Error", Message = "Username or Password is incorrect" });
+                    return StatusCode(StatusCodes.Status500InternalServerError, new AppResponse { Status = "Error", Message = "Username or Password is incorrect" });
                 var password = await _userManager.CheckPasswordAsync(user, loginModel.Password);
                 if (user != null && password)
                 {
@@ -99,11 +100,11 @@ namespace ARScrumWEBAPI.Controllers
                     }
 
                 }
-                return StatusCode(StatusCodes.Status500InternalServerError, new ARScrum.Model.AppModel.Response.Response { Status = "Error", Message = "Username or Password is incorrect" });
+                return StatusCode(StatusCodes.Status500InternalServerError, new AppResponse { Status = "Error", Message = "Username or Password is incorrect" });
             }
             else
             {
-                return StatusCode(StatusCodes.Status403Forbidden, new ARScrum.Model.AppModel.Response.Response { Status = "Error", Message = "User Name or Password cannot be null" });
+                return StatusCode(StatusCodes.Status403Forbidden, new AppResponse { Status = "Error", Message = "User Name or Password cannot be null" });
             }
 
         }
