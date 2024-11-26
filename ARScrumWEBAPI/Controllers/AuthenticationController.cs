@@ -37,7 +37,7 @@ namespace ARScrumWEBAPI.Controllers
         {
             if (registerUser != null)
             {
-                if (registerUser.Role is null)
+                if (registerUser.Role is null || registerUser.Role =="")
                 {
                     registerUser.Role = "User";
                 }
@@ -88,6 +88,7 @@ namespace ARScrumWEBAPI.Controllers
                         var jwtToken = GetToken(authClaims);
                         return Ok(new
                         {
+                            status = "Success",
                             token = new JwtSecurityTokenHandler().WriteToken(jwtToken),
                             expiration = jwtToken.ValidTo,
                             userId = user.Id,

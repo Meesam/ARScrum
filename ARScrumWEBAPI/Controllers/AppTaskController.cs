@@ -46,7 +46,6 @@ namespace ARScrumWEBAPI.Controllers
                 return StatusCode(StatusCodes.Status403Forbidden, new AppResponse { Status = "Error", Message = "CreatedBy is not exist" });
             }
             return StatusCode(StatusCodes.Status400BadRequest, new AppResponse { Status = "Error", Message = "CreatedBy field cannot be empty" });
-
         }
 
         [HttpPost]
@@ -72,7 +71,6 @@ namespace ARScrumWEBAPI.Controllers
                 return StatusCode(StatusCodes.Status403Forbidden, new AppResponse { Status = "Error", Message = "UpdatedBy is not exist" });
             }
             return StatusCode(StatusCodes.Status400BadRequest, new AppResponse { Status = "Error", Message = "UpdatedBy field cannot be empty" });
-
         }
 
         [HttpGet]
