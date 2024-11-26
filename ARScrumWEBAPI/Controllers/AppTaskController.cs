@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ARScrum.Model.AppEnums;
+using Microsoft.AspNetCore.Identity;
 
 namespace ARScrumWEBAPI.Controllers
 {
@@ -14,10 +15,12 @@ namespace ARScrumWEBAPI.Controllers
     public class AppTaskController : ControllerBase
     {
         private readonly IAppTaskService _appTaskService;
+        private readonly UserManager<AppUser> _userManager;
 
-        public AppTaskController(IAppTaskService appTaskService)
+        public AppTaskController(IAppTaskService appTaskService, UserManager<AppUser> userManager)
         {
             _appTaskService = appTaskService;
+            _userManager = userManager;
         }
 
         [HttpPost]
@@ -28,14 +31,21 @@ namespace ARScrumWEBAPI.Controllers
             {
                 return StatusCode(StatusCodes.Status403Forbidden, new AppResponse { Status = "Error", Message = "Task fields cannot be empty" });
             }
-
-            var result = await _appTaskService.CreateAppTaskAsync(appTask);
-            if (result.IsSuccess && result.StatusCode == 200)
+            if (appTask.CreatedBy != "" || appTask.CreatedBy is not null)
             {
-                return Ok(result);
+                var user = await _userManager.FindByIdAsync(appTask.CreatedBy);
+                if (user is not null)
+                {
+                    var result = await _appTaskService.CreateAppTaskAsync(appTask);
+                    if (result.IsSuccess && result.StatusCode == 200)
+                    {
+                        return Ok(result);
+                    }
+                    return StatusCode(StatusCodes.Status500InternalServerError, new AppResponse { Status = "Error", Message = result.Message });
+                }
+                return StatusCode(StatusCodes.Status403Forbidden, new AppResponse { Status = "Error", Message = "CreatedBy is not exist" });
             }
-
-            return StatusCode(StatusCodes.Status500InternalServerError, new AppResponse { Status = "Error", Message = result.Message });
+            return StatusCode(StatusCodes.Status400BadRequest, new AppResponse { Status = "Error", Message = "CreatedBy field cannot be empty" });
 
         }
 
@@ -47,13 +57,21 @@ namespace ARScrumWEBAPI.Controllers
             {
                 return StatusCode(StatusCodes.Status403Forbidden, new AppResponse { Status = "Error", Message = "Task fields cannot be empty" });
             }
-            var result = await _appTaskService.UpdateAppTaskAsync(appTask);
-            if (result.IsSuccess && result.StatusCode == 200)
+            if (appTask.UpdatedBy != "" || appTask.UpdatedBy is not null)
             {
-                return Ok(result);
+                var user = await _userManager.FindByIdAsync(appTask.UpdatedBy);
+                if (user is not null)
+                {
+                    var result = await _appTaskService.UpdateAppTaskAsync(appTask);
+                    if (result.IsSuccess && result.StatusCode == 200)
+                    {
+                        return Ok(result);
+                    }
+                    return StatusCode(StatusCodes.Status500InternalServerError, new AppResponse { Status = "Error", Message = result.Message });
+                }
+                return StatusCode(StatusCodes.Status403Forbidden, new AppResponse { Status = "Error", Message = "UpdatedBy is not exist" });
             }
-
-            return StatusCode(StatusCodes.Status500InternalServerError, new AppResponse { Status = "Error", Message = result.Message });
+            return StatusCode(StatusCodes.Status400BadRequest, new AppResponse { Status = "Error", Message = "UpdatedBy field cannot be empty" });
 
         }
 
@@ -102,13 +120,21 @@ namespace ARScrumWEBAPI.Controllers
             {
                 return StatusCode(StatusCodes.Status403Forbidden, new AppResponse { Status = "Error", Message = "DeletedBy cannot be empty or null" });
             }
-
-            var result = await _appTaskService.DeleteAppTaskAsync(taskId, deletedBy);
-            if (result.IsSuccess && result.StatusCode == 200)
+            if (deletedBy != "" || deletedBy is not null)
             {
-                return Ok(result);
+                var user = await _userManager.FindByIdAsync(deletedBy);
+                if (user is not null)
+                {
+                    var result = await _appTaskService.DeleteAppTaskAsync(taskId, deletedBy);
+                    if (result.IsSuccess && result.StatusCode == 200)
+                    {
+                        return Ok(result);
+                    }
+                    return StatusCode(StatusCodes.Status500InternalServerError, new AppResponse { Status = "Error", Message = result.Message });
+                }
+                return StatusCode(StatusCodes.Status403Forbidden, new AppResponse { Status = "Error", Message = "DeletedBy is not exist" });
             }
-            return StatusCode(StatusCodes.Status500InternalServerError, new AppResponse { Status = "Error", Message = result.Message });
+            return StatusCode(StatusCodes.Status400BadRequest, new AppResponse { Status = "Error", Message = "DeletedBy field cannot be empty" });
         }
     }
 }
